@@ -1,0 +1,16 @@
+{
+  "name": "CotacaoOnline",
+  "authors": [
+    "fabio <fabiosantosmanarin@gmail.com>"
+  ],
+  "description": "CotacaoOnline",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  
+    "dependencies": {
+        "font-awesome": "latest",
+        "animate.css": "latest",
+        "angular": "latest"
+    }
+}
