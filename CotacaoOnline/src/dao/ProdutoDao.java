@@ -35,7 +35,7 @@ public class ProdutoDao {
         } catch (Exception e) {
             throw new Exception();
         } finally {
-            em.close();
+        	em.close();
         }
         return listaProdutos;
     }

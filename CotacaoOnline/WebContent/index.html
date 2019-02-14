@@ -17,19 +17,20 @@
 <body ng-controller="MainController" ng-app="CotacaoOnline">
 	
 	<div class="container">
-		<table>
+		<table id="produtos">
 			<tr>
-				<td>Código</td>
-				<td>Nome</td>
-				<td>Data inicial</td>
-				<td>Data final</td>
+				<th>Código</th>
+				<th>Nome</th>
+				<th>Data inicial</th>
+				<th>Data final</th>
 			</tr>
 			<tr ng-repeat="produto in listaProdutos | orderBy : 'nome'">
-				<th>{{ produto.id }}</th>
-				<th>{{ produto.nome }}</th>
-				<th>{{ produto.dataInicialCotacao }}</th>
-				<th>{{ produto.dataFinalCotacao }}</th>
+				<td>{{ produto.id }}</td>
+				<td>{{ produto.nome }}</td>
+				<td>{{ produto.dataInicialCotacao | date : "dd/MM/yyyy" }}</td>
+				<td>{{ produto.dataFinalCotacao | date : "dd/MM/yyyy" }}</td>
 			</tr>
+			
 		</table>
 	</div>
 </body>

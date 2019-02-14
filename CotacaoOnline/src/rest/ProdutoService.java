@@ -30,7 +30,7 @@ public class ProdutoService {
 	}
 	
 	@GET
-	@Path("/list")
+	@Path("/listarProduto")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Produto> listarProduto() {
 		List<Produto> listaProduto = null;
@@ -45,7 +45,7 @@ public class ProdutoService {
 	}
 	
 	@POST
-	@Path("/add")
+	@Path("/inserirProduto")
 	@Consumes(MediaType.APPLICATION_JSON + CHARSET_UTF8)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String InserirProduto(Produto produto) {
@@ -82,7 +82,7 @@ public class ProdutoService {
 	}
 	
 	@PUT
-	@Path("/edit")
+	@Path("/alterarProduto")
 	@Consumes(MediaType.APPLICATION_JSON + CHARSET_UTF8)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String editarProduto(Produto produto) {
@@ -100,7 +100,7 @@ public class ProdutoService {
 	}
 	
 	@DELETE
-	@Path("delete/{id}")
+	@Path("removerProduto/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String removerProduto(@PathParam("id") int idProduto) {

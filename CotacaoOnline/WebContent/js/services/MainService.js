@@ -3,7 +3,7 @@ angular.module('MainService', []).factory('service', ['$http', function($http){
 		
     return {   
         getProduto: function(cbSuccess, cbError) {
-            return $http.get(api + 'list')
+            return $http.get(api + 'listarProduto', )
                     .then(cbSuccess)
         },
         getComprasId: function(id, cbSuccess, cbError) {
