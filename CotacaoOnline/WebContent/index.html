@@ -23,15 +23,38 @@
 				<th>Nome</th>
 				<th>Data inicial</th>
 				<th>Data final</th>
+				<th></th>
 			</tr>
-			<tr ng-repeat="produto in listaProdutos | orderBy : 'nome'">
+			<tr ng-dblclick="onClickEditar(produto.id)" ng-repeat="produto in listaProdutos | orderBy : 'nome'">
 				<td>{{ produto.id }}</td>
 				<td>{{ produto.nome }}</td>
 				<td>{{ produto.dataInicialCotacao | date : "dd/MM/yyyy" }}</td>
 				<td>{{ produto.dataFinalCotacao | date : "dd/MM/yyyy" }}</td>
+				<td>
+					<!--<input type="submit" data-ng-blur="removerProduto(produto.id)" value="Excluir">-->
+				</td>
 			</tr>
-			
 		</table>
+		
+		<div class="modal">
+			<div class=produtoCad>
+			  <form data-ng-submit="salvar()">
+			    <label for="nome">Nome</label>
+			    <input type="text" id="nome" name="nome" data-ng-model="produto.nome" placeholder="Nome do produto.." required >
+			
+			    <label for="dataIncial">Data inicial</label>
+			    <input type="date" id="dataIncial" data-ng-model="produto.dataInicialCotacao" name="dataIncial" required>
+			    
+			    <label for="dataFinal">Data final</label>
+			    <input type="date" id="dataFinal" data-ng-model="produto.dataFinalCotacao" name="dataFinal" required>
+			  
+			    <input type="submit" value="Salvar">
+			    <input type="button" value="Fechar" ng-click="onClickFechar()">
+			  </form>
+		</div>
+		</div>
+	
+		
 	</div>
 </body>
 </html>
