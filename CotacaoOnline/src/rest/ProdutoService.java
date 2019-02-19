@@ -3,7 +3,6 @@ package rest;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -12,9 +11,18 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import dao.CotacaoDao;
 import dao.ProdutoDao;
+import entity.Cotacao;
 import entity.Produto;
 
 @Path("/produto")
@@ -32,38 +40,73 @@ public class ProdutoService {
 	@GET
 	@Path("/listarProduto")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Produto> listarProduto() {
+	public Response listarProduto(@QueryParam("comCotacao") boolean comCotacao) throws Exception {
 		List<Produto> listaProduto = null;
+		Gson jsonParse = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
+		
 		try {
-			listaProduto = produtoDao.ListarProdutos();
+			listaProduto = produtoDao.ListarProdutos(comCotacao);
 		} catch (Exception e){
 			e.printStackTrace();
 			e.getMessage();
 		}
 		
-		return listaProduto;
+		if(listaProduto.isEmpty()){
+			JsonObject retorno = new JsonObject();
+			retorno.addProperty("success", false);
+			retorno.addProperty("message", "Não a registros para exibir.");
+			return Response.status(Status.OK).entity(retorno.toString()).build();
+		}
+		
+		return Response.status(Status.OK).entity(jsonParse.toJson(listaProduto)).build();
+	}
+	
+	@GET
+	@Path("/listarProdutosDisponiveis")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listarProdutosDisponiveis() throws Exception {
+		List<Produto> listaProduto = null;
+		Gson jsonParse = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
+		JsonObject retorno = new JsonObject();
+
+		try {
+			listaProduto = produtoDao.listarProdutosDisponiveis();
+		} catch (Exception e){
+			e.printStackTrace();
+			e.getMessage();
+		}
+
+		if(listaProduto.isEmpty()){
+			retorno.addProperty("success", false);
+			retorno.addProperty("message", "Não a registros para exibir.");
+			return Response.status(Status.OK).entity(retorno.toString()).build();
+		}
+		
+		return Response.status(Status.OK).entity(jsonParse.toJson(listaProduto)).build();
 	}
 	
 	@POST
 	@Path("/inserirProduto")
 	@Consumes(MediaType.APPLICATION_JSON + CHARSET_UTF8)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String InserirProduto(Produto produto) {
-		String msg = "";
-
+	public Response InserirProduto(Produto produto) {
+		JsonObject retorno = new JsonObject();
+		
+		if (produto == null){
+			retorno.addProperty("success", false);
+			retorno.addProperty("message", "Erro ao inserir produto. Tente novamente.");
+			return Response.status(Status.OK).entity(retorno.toString()).build();
+		}
+		
 		try {
-			if (produto.getId() > 0)
-				produtoDao.EditarProduto(produto);
-			else {
-				produtoDao.InserirProduto(produto);
-			}
-			msg = "Produto inserido com sucesso.";
+			produtoDao.InserirProduto(produto);
+			retorno.addProperty("success", true);
+			retorno.addProperty("message", "Produto inserido com sucesso.");
 		} catch (Exception e) {
-			msg = "Erro ao inserir produto.";
 			e.printStackTrace();
 		}
 
-		return msg;
+		return Response.status(Status.OK).entity(retorno.toString()).build();
 	}
 	
 	@GET
@@ -85,35 +128,52 @@ public class ProdutoService {
 	@Path("/alterarProduto")
 	@Consumes(MediaType.APPLICATION_JSON + CHARSET_UTF8)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String editarProduto(Produto produto) {
-		String msg = "";
+	public Response alterarProduto(Produto produto) {
+		Gson jsonParse = new Gson();
+		JsonObject retorno = new JsonObject();
+		
+		if (produto == null){
+			retorno.addProperty("success", false);
+			retorno.addProperty("message", "Erro ao editar produto. Tente novamente.");
+			return Response.status(Status.OK).entity(retorno.toString()).build();
+		}
 		
 		try {
 			produtoDao.EditarProduto(produto);
-			msg = "Produto alterado com sucesso.";
+			retorno.addProperty("success", true);
+			retorno.addProperty("message", "Produto alterado com sucesso.");
 		} catch (Exception e) {
-			msg = "Erro ao alterar produto..";
 			e.printStackTrace();
 		}
 		
-		return msg;
+		return Response.status(Status.OK).entity(jsonParse.toJson(retorno)).build();
 	}
 	
 	@DELETE
 	@Path("removerProduto/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String removerProduto(@PathParam("id") int idProduto) {
-		String msg = "";
+	public Response removerProduto(@PathParam("id") int idProduto) {
+		JsonObject retorno = new JsonObject();
 		
-		try {
-			produtoDao.RemoverProduto(idProduto);
-			msg = "Produto removido com sucesso.";
-		} catch (Exception e) {
-			msg = "Erro ao remover o produto.";
-			e.printStackTrace();
+		if (idProduto == 0){
+			retorno.addProperty("success", false);
+			retorno.addProperty("message", "Erro ao remover produto. Tente novamente.");
+			return Response.status(Status.OK).entity(retorno.toString()).build();
 		}
-		
-		return msg;
+		try {
+			List<Cotacao> listacotacoes = new CotacaoDao().ListarCotacoesPorProduto(idProduto); 
+			if (listacotacoes.size() > 0){
+				retorno.addProperty("success", false);
+				retorno.addProperty("message", "Não é possível remover produtos que já foram cotados.");
+				return Response.status(Status.OK).entity(retorno.toString()).build();
+			}
+			produtoDao.RemoverProduto(idProduto);
+			retorno.addProperty("success", true);
+			retorno.addProperty("message", "Produto removido com sucesso.");
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return Response.status(Status.OK).entity(retorno.toString()).build();
 	}
 }

@@ -1,4 +1,4 @@
-angular.module('CotacaoOnline', ['MainController', 'MainService'])
+angular.module('CotacaoOnline', ['MainController', 'MainService', 'CotacaoController'])
     .config([
         '$compileProvider',
         function ($compileProvider) {
