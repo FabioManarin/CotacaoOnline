@@ -24,6 +24,8 @@
 	  <h3 class="logo">SISTEMA DE COTAÇÕES ONLINE</h3>
 	</div>
 	
+	<hr class="top-table-cotacao"></hr>
+	
 	<div class="container">
 		<table id="produtos" class="w3-table-all w3-hoverable">
 			<tr class="w3-gray">
@@ -41,6 +43,11 @@
 				<td><a href ng-click="onClickNovaCotacao(produtoDisponivel)">Cotar produto</a></td>
 			</tr>
 		</table>
+		
+		<div class="no-data-found">
+			<p class="no-data-msg">Não há dados por aqui.</p>
+		</div>
+		
 	</div>
 	
 	<div class="modal modal-cad-cotacao">
@@ -59,7 +66,7 @@
 			    <input type="text" id="telefone" name="telefone" data-ng-model="cotacao.telefoneFornec" placeholder="Telefone do fornecedor" required >
 			
 				<label for="valor">Valor</label>
-			    <input type="number" id="valor" name="valor" data-ng-model="cotacao.valor" placeholder="Valor da cotação" data-ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required >
+			    <input type="number" id="valor" name="valor" data-ng-model="cotacao.valor" placeholder="Valor da cotação" step="0.01" required >
 			
 			    <footer class="footer-cadastro-cotacao">
 				    <input type="button" class="btn footer-content" value="Fechar" data-ng-click="onClickFecharCotacaoCad()">

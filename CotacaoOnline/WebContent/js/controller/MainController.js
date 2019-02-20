@@ -6,37 +6,40 @@ angular.module('MainController', []).controller('MainController', function ($sco
 	$scope.produtoDisponivel = {};
 	$scope.produtosComCotacao = false;
 	
-    $scope.listarProduto = () => {
+    $scope.listarProduto = (cb) => {
         service.listarProduto($scope.produtosComCotacao, function(resp){
-        	$scope.listaProdutos = resp.data;
-        });
-    }
-    /*
-    $scope.listarProdutoDisponivelCotacao = () => {
-        service.listarProdutosDisponiveis(function(resp){
-        	if(resp.data.sucesso == undefined){
-        		resp.data.dataInicialCotacao = Date.parse(resp.data.dataInicialCotacao);
-        		$scope.listaProdutosDisponiveis = resp.data;
-        	}else{
-        		alert(resp.data.mensagem);
+        	if (resp.data.length) {
+            	$scope.listaProdutos = resp.data;
+            	showTable();
+            	hiddenNoDataMessage();
+        	} else {
+        		$scope.listaProdutos = [];
+        		hiddenTable();
+        		showNoDataMessage();
+        	}
+        	
+        	if (cb) {
+        		cb();
         	}
         });
     }
-    */
+    
     $scope.salvar = function(){
+    	if (!validacoesAntesDeSalvar()) {
+    		return;
+    	}
+    	
     	if ($scope.produto.id){
     		service.alterarProduto($scope.produto, function(resp){
 	    		limparProduto();
-				$scope.listarProduto();
+				$scope.listarProduto(() => alert(resp.data.message));
 				fecharCadastro();
-				alert(resp.data.message);
     		});
     	} else {
     		service.inserirProduto($scope.produto, function(resp){
     			limparProduto();
-				$scope.listarProduto();
+				$scope.listarProduto(() => alert(resp.data.message));
 				fecharCadastro();
-				alert(resp.data.message);
     		}); 
     	}
     }
@@ -67,8 +70,7 @@ angular.module('MainController', []).controller('MainController', function ($sco
     
     $scope.onClickRemover = function(id) {
     	service.removerProduto(id, function(resp) {
-    		$scope.listarProduto();
-    		alert(resp.data.message);
+    		$scope.listarProduto(() => alert(resp.data.message));
     	});
     }
     
@@ -79,6 +81,42 @@ angular.module('MainController', []).controller('MainController', function ($sco
     $scope.onChangeFiltro = function () {
     	$scope.listarProduto();
     }
+    
+    function validacoesAntesDeSalvar() {
+    	let produto = $scope.produto;
+
+    	if (produto.dataInicialCotacao > produto.dataFinalCotacao) {
+    		alert("Data incial não pode ser menor que a data final.");
+    		return false;
+    	}
+    	
+    	return true;
+    }
+    
+    function showTable(){
+    	let table = document.getElementById("produtos");
+
+    	table.style.display = "table";
+    }
+    
+    function hiddenTable(){
+    	let table = document.getElementById("produtos");
+
+    	table.style.display = "none";
+    }
+    
+    function showNoDataMessage(){
+    	let noDataMsg = document.getElementsByClassName("no-data-msg")[0];
+
+    	noDataMsg.style.display = "block";
+    }
+    
+    function hiddenNoDataMessage(){
+    	let noDataMsg = document.getElementsByClassName("no-data-msg")[0];
+
+    	noDataMsg.style.display = "none";
+    }
+    
     
     function listarCotacoes(idProduto) {
     	setCarregando();
@@ -130,45 +168,6 @@ angular.module('MainController', []).controller('MainController', function ($sco
     	$scope.produto = {};
     }
     
-    /*
-     * COTAÇÕES
-    
-    
-	$scope.salvarCotacao = function(){
-    	service.inserirCotacao($scope.cotacao, function(resp){
-    		alert(resp.data);
-    		limparCotacao();
-    		fecharCadastroCotacao();
-    	});
-    }
-	
-	function limparCotacao() {
-    	$scope.cotacao = {};
-    }
-
-	$scope.onClickNovaCotacao = function(produtoDisponivel) {
-		limparCotacao();
-		abrirCadastroCotacoes();
-		$scope.produtoDisponivel = produtoDisponivel;
-		$scope.cotacao.produto = $scope.produtoDisponivel;
-	}
-	
-	function abrirCadastroCotacoes () {
-    	let modal = document.getElementsByClassName("modal-cad-cotacao")[0];
-
-    	modal.style.display = "block";
-    } 
-	
-	function fecharCadastroCotacao () {
-    	let modal = document.getElementsByClassName("modal-cad-cotacao")[0];
-
-    	modal.style.display = "none";
-     }
-	
-	$scope.onClickFecharCotacaoCad = function() {
-		fecharCadastroCotacao();
-    }
-    */
     $scope.listarProduto();
-    //$scope.listarProdutoDisponivelCotacao();
+   
 });

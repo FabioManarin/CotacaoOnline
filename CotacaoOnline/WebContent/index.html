@@ -29,12 +29,15 @@
 			<label for="search">Pesquisar</label>
 			<input type="text" id="search" name="search" data-ng-model="search" placeholder="Buscar..." >
 		</div>
+		  
+		 <label class="produto-com-cotacao">Produtos com cotacão
+		  <input type="checkbox" data-ng-model="produtosComCotacao" ng-change="onChangeFiltro()" id="produtosComCotacao" name="produtosComCotacao"
+		        checked="checked">
+		  <span class="checkmark"></span>
+		</label>
 		
-		<input type="checkbox" data-ng-model="produtosComCotacao" ng-change="onChangeFiltro()" id="produtosComCotacao" name="produtosComCotacao"
-		        checked>
-		 <label for="produtosComCotacao">Produtos com cotacão</label>
-		 
-		<button class="btn" ng-click="onClickNovo()">Novo</button>
+		<button class="btn-novo" ng-click="onClickNovo()">Novo</button>
+		<hr class="top-table"></hr>
 		<table id="produtos">
 			<tr>
 				<th>Código</th>
@@ -51,12 +54,20 @@
 				<td>{{ produto.dataFinalCotacao }}</td>
 				<td><a href ng-click="onClickAbrirCotacoes(produto.id)">Visualizar cotações</a></td>
 				<td class="align-center">
+					<button ng-click="onClickEditar(produto.id)" class="btn-editar">
+						<img class="icon-edit" src="img/icone-editar-cinza-16x16.png">
+					</button>
 					<button ng-click="onClickRemover(produto.id)" class="btn-remover">
 						<img class="icon-delete" src="img/icone-lixeira-mensagens-cinza-24x24.png">
 					</button>
+					
 				</td>
 			</tr>
 		</table>
+		
+		<div class="no-data-found">
+			<p class="no-data-msg">Não há dados por aqui.</p>
+		</div>
 		
 		<div class="modal modal-cad">
 			<div class=produto-cad>
@@ -81,28 +92,27 @@
 			</div>
 		</div>
 		
-	<div class="modal modal-cotacoes">
-		<div class=cotacoes-list>
-			<table id="cotacoes">
-				<tr class="w3-gray">
-					<th>Código</th>
-					<th>Valor</th>
-					<th>Nome fornecedor</th>
-					<th>E-mail fornecedor</th>
-					<th>Telefone</th>
-				</tr>
-				<tr ng-repeat="cotacoes in listaCotacoes | orderBy : 'valor'">
-					<td>{{ cotacoes.id }}</td>
-					<td>{{ cotacoes.valor | currency:"R$ "}}</td>
-					<td>{{ cotacoes.nomeFornec }}</td>
-					<td>{{ cotacoes.emailFornec }}</td>
-					<td>{{ cotacoes.telefoneFornec }}</td>
-				</tr>
-			</table>
-			
-			<button class="btn-fechar w3-button w3-red" ng-click="onClickFecharCotacoes()">Fechar</button>
+		<div class="modal modal-cotacoes">
+			<div class=cotacoes-list>
+				<table id="cotacoes">
+					<tr ">
+						<th>Código</th>
+						<th>Valor</th>
+						<th>Nome fornecedor</th>
+						<th>E-mail fornecedor</th>
+						<th>Telefone</th>
+					</tr>
+					<tr ng-repeat="cotacoes in listaCotacoes | orderBy : 'valor'">
+						<td>{{ cotacoes.id }}</td>
+						<td>{{ cotacoes.valor | currency:"R$ "}}</td>
+						<td>{{ cotacoes.nomeFornec }}</td>
+						<td>{{ cotacoes.emailFornec }}</td>
+						<td>{{ cotacoes.telefoneFornec }}</td>
+					</tr>
+						<button class="btn-fechar w3-button w3-red" ng-click="onClickFecharCotacoes()">Fechar</button>
+				</table>
+			</div>
 		</div>
-	</div>
 	</div>
 </body>
 </html>

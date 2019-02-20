@@ -16,7 +16,6 @@ public class CotacaoDao {
 		
 		for (Cotacao item : lista) {
 			if (item.getEmailFornec().equals(cotacao.getEmailFornec())){
-				//throw new Exception("Produto já possui cotação do fornecedor.");
 				return true;
 			}
 		}
@@ -27,7 +26,6 @@ public class CotacaoDao {
 		EntityManager em = ResourceBean.getEntityManagerFactory().createEntityManager();
 
         try {
-        	//VerificaSeJaPossuiCotacao(cotacao);
             em.getTransaction().begin();
             em.persist(cotacao);
             em.getTransaction().commit();

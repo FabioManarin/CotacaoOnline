@@ -31,6 +31,29 @@ body {
     width: 10%;
     padding: 1%;
 }
+
+.btn-novo {
+	float: right;
+    margin-bottom: 20px;
+    border: none;
+    width: 10%;
+    padding: 1%;
+}
+.btn-novo {
+	width: 15%;
+ 	background-color: gray;
+  	color: white;
+  	padding: 10px 20px;
+  	margin: 8px 0;
+  	border: none;
+ 	border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-novo:hover {
+	 background-color: darkgray;
+}
+
 #search {
 	width: 40%;
     height: 40px;
@@ -68,12 +91,6 @@ body {
 	color: white;
 }
 
-/*
-#produtos td, #produtos th {
-	padding: 6px;
-	border: 1px solid #ddd;
-}
-*/
 <!--Formulario de produtos-->
 .formProduto {
 	border-radius: 5px;
@@ -81,8 +98,28 @@ body {
   	padding: 20px;
 }
 
-input[type=text], input[type=number], input[type=email] {
+input[type=text] {
   width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=email] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=number]{
+  width: 50%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -102,6 +139,18 @@ input[type=date] {
     height: 38px;
 }
 
+.header-title {
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.header-title-cotacao {
+	text-align: center;
+    padding: 10px;
+    font-weight: bold;
+}
+
 input[type=submit]:hover {
   background-color: darkgray;
 }
@@ -111,7 +160,7 @@ input[type=submit]:hover {
  	background-color: gray;
   	color: white;
   	padding: 10px 20px;
-  	margin: 8px 0;
+  	margin: 3px 0;
   	border: none;
  	border-radius: 4px;
     cursor: pointer;
@@ -126,6 +175,25 @@ input[type=submit]:hover {
 	background-color: transparent;
 	border: none;
 	outline: none;
+}
+
+.btn-editar {
+	height: 20px;
+	background-color: transparent;
+	border: none;
+	outline: none;
+}
+
+.icon-edit {
+	padding: 4px;
+}
+
+.icon-edit:hover {
+	background-color: #fefefe;
+}
+
+.icon-edit:active {
+	background-color: #fefefe;
 }
 
 .icon-delete:hover {
@@ -197,10 +265,10 @@ input[type=submit]:hover {
 }
 
 .cotacoes-list {
-	width: 800px;
-	background-color: #fefefe;
-	margin: 150px auto auto auto;
-	padding: 0px 0px 50px 0px;
+	width: 80%;
+    background-color: #fefefe;
+    margin: auto auto auto auto;
+    padding: 10px 10px 10px 10px;
 }
 
 .w3-table-all {
@@ -236,26 +304,6 @@ COTAÇÕES
     padding: 0 10px 0 10px;
 }
 
-/*
-Cotações
-*/
-
-#cotacoes th, td {
-	padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-#cotacoes th{
-	text-align: left;
-	background-color: gray;
-	color: white;
-}
-
-.btn {
-	width: 80px;
-}
-
 #cotacoes {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
@@ -266,27 +314,108 @@ Cotações
 	background-color: #f2f2f2;
 }
 
-#cotacoes tr:hover {
-	background-color: #ddd;
+
+#cotacoes th, td {
+	padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
 }
-/*
-#cotacoes tr:nth-child(even) {
-	background-color: #f2f2f2;
-}
+
 
 #cotacoes tr:hover {
 	background-color: #ddd;
 }
 
-#cotacoes th {
+#cotacoes th{
 	text-align: left;
-	background-color: #4CAF50;
+	background-color: gray;
 	color: white;
 }
 
-#cotacoes td, #cotacoes th {
-	padding: 6px;
-	border: 1px solid #ddd;
+.top-table-cotacao {
+	width: 80%;
+	margin-top: 5%;
 }
-*/
 
+.btn {
+	width: 80px;
+}
+
+.btn-novo {
+	width: 80px;
+}
+
+.no-data-msg {
+	display: none;
+}
+
+.no-data-found {
+    text-align: center;
+}
+
+.top-table {
+	width: 100%;
+}
+
+/*
+CheckBox
+*/
+.produto-com-cotacao {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  top: 18px;
+}
+
+.produto-com-cotacao input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+}
+
+.produto-com-cotacao input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.produto-com-cotacao input:checked ~ .checkmark {
+  background-color: gray;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.produto-com-cotacao input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.produto-com-cotacao .checkmark:after {
+  left: 5px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

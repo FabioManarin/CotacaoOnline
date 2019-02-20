@@ -31,10 +31,12 @@ public class CotacaoService {
 private static final String CHARSET_UTF8 = ";charset=utf-8";
 	
 	private CotacaoDao cotacaoDao;
+	private RetMessage retMessage;
 	
 	@PostConstruct
 	private void init() {
 		cotacaoDao = new CotacaoDao();
+		retMessage = new RetMessage();
 	}
 		
 	@GET
@@ -53,9 +55,7 @@ private static final String CHARSET_UTF8 = ";charset=utf-8";
 		}
 		
 		if(listaCotacao.isEmpty()){
-			retorno.addProperty("success", false);
-			retorno.addProperty("message", "Não a registros para exibir.");
-			return Response.status(Status.OK).entity(retorno.toString()).build();
+			return retMessage.returnMessage(false, "Não a registros para exibir.");
 		}
 		
 		return Response.status(Status.OK).entity(jsonParse.toJson(listaCotacao)).build();
@@ -69,11 +69,12 @@ private static final String CHARSET_UTF8 = ";charset=utf-8";
 		JsonObject retorno = new JsonObject();
 		
 		if (cotacao == null){
-			retorno.addProperty("success", false);
-			retorno.addProperty("message", "Erro ao inserir cotação. Tente novamente.");
-			return Response.status(Status.OK).entity(retorno.toString()).build();
+			return retMessage.returnMessage(false, "Erro ao inserir cotação. Tente novamente.");
 		}
 		try {
+			if (cotacaoDao.VerificaSeJaPossuiCotacao(cotacao)){
+				return retMessage.returnMessage(false, "Produto já possui cotação do fornecedor.");
+			}
 			cotacaoDao.InserirCotacao(cotacao);
 			retorno.addProperty("success", true);
 			retorno.addProperty("message", "Cotação inserida com sucesso.");
