@@ -53,7 +53,6 @@ public class ProdutoDao {
         
         try {
         	Query query = em.createQuery("from Produto where dataInicialCotacao <= curdate() and dataFinalCotacao >= curdate()");
-        	//between
         	listaProdutos = query.getResultList();
         } catch (Exception e) {
             throw new Exception();

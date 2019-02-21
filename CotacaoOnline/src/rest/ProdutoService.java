@@ -54,11 +54,6 @@ public class ProdutoService {
 		}
 		
 		if(listaProduto.isEmpty()){
-			/*
-			JsonObject retorno = new JsonObject();
-			retorno.addProperty("success", false);
-			retorno.addProperty("message", "Não a registros para exibir.");
-			return Response.status(Status.OK).entity(retorno.toString()).build();*/
 			return retMessage.returnMessage(false, "Não a registros para exibir.");
 		}
 		
@@ -80,10 +75,6 @@ public class ProdutoService {
 		}
 
 		if(listaProduto.isEmpty()){
-			/*
-			retorno.addProperty("success", false);
-			retorno.addProperty("message", "Não a registros para exibir.");
-			return Response.status(Status.OK).entity(retorno.toString()).build();*/
 			return retMessage.returnMessage(false, "Não a registros para exibir.");
 		}
 		
@@ -98,10 +89,6 @@ public class ProdutoService {
 		JsonObject retorno = new JsonObject();
 		
 		if (produto == null){
-			/*
-			retorno.addProperty("success", false);
-			retorno.addProperty("message", "Erro ao inserir produto. Tente novamente.");
-			return Response.status(Status.OK).entity(retorno.toString()).build();*/
 			return retMessage.returnMessage(false, "Erro ao inserir produto. Tente novamente.");
 		}
 		
@@ -140,10 +127,6 @@ public class ProdutoService {
 		JsonObject retorno = new JsonObject();
 		
 		if (produto == null){
-			/*
-			retorno.addProperty("success", false);
-			retorno.addProperty("message", "Erro ao editar produto. Tente novamente.");
-			return Response.status(Status.OK).entity(retorno.toString()).build();*/
 			return retMessage.returnMessage(false, "Erro ao editar produto. Tente novamente.");
 		}
 		
@@ -166,21 +149,15 @@ public class ProdutoService {
 		JsonObject retorno = new JsonObject();
 		
 		if (idProduto == 0){
-			/*
-			retorno.addProperty("success", false);
-			retorno.addProperty("message", "Erro ao remover produto. Tente novamente.");
-			return Response.status(Status.OK).entity(retorno.toString()).build();*/
 			return retMessage.returnMessage(false, "Erro ao remover produto. Tente novamente.");
 		}
 		try {
 			List<Cotacao> listacotacoes = new CotacaoDao().ListarCotacoesPorProduto(idProduto); 
+			
 			if (listacotacoes.size() > 0){
-				/*
-				retorno.addProperty("success", false);
-				retorno.addProperty("message", "Não é possível remover produtos que já foram cotados.");
-				return Response.status(Status.OK).entity(retorno.toString()).build();*/
 				return retMessage.returnMessage(false, "Não é possível remover produtos que já foram cotados.");
 			}
+			
 			produtoDao.RemoverProduto(idProduto);
 			retorno.addProperty("success", true);
 			retorno.addProperty("message", "Produto removido com sucesso.");

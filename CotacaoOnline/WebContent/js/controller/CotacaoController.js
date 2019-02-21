@@ -44,6 +44,10 @@ angular.module('CotacaoController', []).controller('CotacaoController', function
     	return true;
     }
 	
+	$scope.onClickAtualizar = function(cb) {
+		$scope.listarProdutoDisponivelCotacao(cb);
+	}
+	
 	$scope.onClickNovaCotacao = function(produtoDisponivel) {
 		limparCotacao();
 		abrirCadastroCotacoes();
@@ -73,14 +77,18 @@ angular.module('CotacaoController', []).controller('CotacaoController', function
 	
 	function showTable(){
     	let table = document.getElementById("produtos");
+    	let topTableCotacao = document.getElementById("top-table-cotacao");
 
     	table.style.display = "table";
+    	topTableCotacao.style.display = "none";
     }
     
     function hiddenTable(){
     	let table = document.getElementById("produtos");
-
+    	let topTableCotacao = document.getElementById("top-table-cotacao");
+    	
     	table.style.display = "none";
+    	topTableCotacao.style.display = "block";
     }
 
     function showNoDataMessage(){

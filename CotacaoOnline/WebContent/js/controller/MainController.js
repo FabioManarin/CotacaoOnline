@@ -2,9 +2,9 @@ angular.module('MainController', []).controller('MainController', function ($sco
 	$scope.listaProdutos = [];
 	$scope.listaCotacoes = [];
 	$scope.produto = {};
-	$scope.cotacao = {};
 	$scope.produtoDisponivel = {};
 	$scope.produtosComCotacao = false;
+	$scope.produtoAtual = {};
 	
     $scope.listarProduto = (cb) => {
         service.listarProduto($scope.produtosComCotacao, function(resp){
@@ -17,7 +17,7 @@ angular.module('MainController', []).controller('MainController', function ($sco
         		hiddenTable();
         		showNoDataMessage();
         	}
-        	
+
         	if (cb) {
         		cb();
         	}
@@ -32,8 +32,9 @@ angular.module('MainController', []).controller('MainController', function ($sco
     	if ($scope.produto.id){
     		service.alterarProduto($scope.produto, function(resp){
 	    		limparProduto();
-				$scope.listarProduto(() => alert(resp.data.message));
+	    		$scope.listarProduto();
 				fecharCadastro();
+				alert(resp.data.message)
     		});
     	} else {
     		service.inserirProduto($scope.produto, function(resp){
@@ -76,6 +77,17 @@ angular.module('MainController', []).controller('MainController', function ($sco
     
     $scope.onClickAbrirCotacoes = function (idProduto) {
     	listarCotacoes(idProduto);
+    	
+    	let produtoAtual = $scope.listaProdutos.find(item => item.id == idProduto);
+
+    	$scope.produtoAtual = {
+    		nome: produtoAtual.nome,
+    		id: idProduto
+    	}; 	
+    }
+    
+    $scope.onClickAtualizar = function(cb) {
+    	$scope.listarProduto(cb);
     }
     
     $scope.onChangeFiltro = function () {
@@ -95,14 +107,19 @@ angular.module('MainController', []).controller('MainController', function ($sco
     
     function showTable(){
     	let table = document.getElementById("produtos");
+    	let hr = document.getElementById("hr");
 
     	table.style.display = "table";
+    	hr.style.display = "none";
     }
     
     function hiddenTable(){
     	let table = document.getElementById("produtos");
+    	let hr = document.getElementById("hr");
 
     	table.style.display = "none";
+    	hr.style.display = "block";
+
     }
     
     function showNoDataMessage(){
@@ -119,25 +136,18 @@ angular.module('MainController', []).controller('MainController', function ($sco
     
     
     function listarCotacoes(idProduto) {
-    	setCarregando();
     	 service.listarCotacoes(idProduto, function(resp){
          	$scope.listaCotacoes = resp.data;
-        	abrirCotacoes();
         	
-        	removeCarregando();
+         	if ($scope.listaCotacoes.length > 0) {
+         		abrirCotacoes();
+         	} else {
+         		alert('Não há cotações para exibir.')
+         	}
+         	        	
          });
-    }
-    
-    function setCarregando () {
-    	let body = document.body;
-
-    	body.classList.add("mouse-waiting");
-    }
-    
-    function removeCarregando () {
-    	let body = document.body;
-
-    	body.classList.remove("mouse-waiting");
+    	 
+    	 limparCotacao();
     }
     
     function fecharCadastro () {
@@ -166,6 +176,10 @@ angular.module('MainController', []).controller('MainController', function ($sco
     
     function limparProduto() {
     	$scope.produto = {};
+    }
+    
+    function limparCotacao() {
+    	$scope.listaCotacoes = [];
     }
     
     $scope.listarProduto();

@@ -20,7 +20,8 @@ body {
 
 .container {
 	background-color: white;
-	margin: 5% auto 0 auto;
+	margin: 3% auto 0 auto;
+	/*margin: 0% auto 0 auto;*/
 	width: 80%;
 }
 
@@ -32,35 +33,60 @@ body {
     padding: 1%;
 }
 
-.btn-novo {
-	float: right;
-    margin-bottom: 20px;
-    border: none;
-    width: 10%;
-    padding: 1%;
-}
-.btn-novo {
-	width: 15%;
+.btn-novo, .btn-atualizar {
  	background-color: gray;
   	color: white;
   	padding: 10px 20px;
   	margin: 8px 0;
-  	border: none;
  	border-radius: 4px;
-    cursor: pointer;
+ 	float: right;
+    margin-bottom: 20px;
+    border: none;
+    width: 90px;
+    margin-left: 10px;
 }
 
-.btn-novo:hover {
+.btn-novo:hover, .btn-atualizar:hover, .btn-atualizar-cot:hover {
 	 background-color: darkgray;
+}
+
+.btn-atualizar-cot {
+    background-color: gray;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    float: right;
+    margin-bottom: 20px;
+    border: none;
+    width: 90px;
+    margin-left: 10px;
+    margin: 1% 10% 1% 1%;
 }
 
 #search {
 	width: 40%;
     height: 40px;
+    margin-left: 10px;
 }
 
 .search {
 	height: 80px;
+}
+
+#search-cot {
+	width: 30%;
+    height: 40px;
+    margin-left: 10px;
+   
+}
+
+.search-cot-name {
+	margin-left: 10%;
+}
+
+.search-cot {
+	height: 80px;
+	margin: 10px 10px -40px 10px;
 }
 
 #produtos {
@@ -204,9 +230,26 @@ input[type=submit]:hover {
 	background-color: #fefefe;
 }
 
+.icon-fechar:hover {
+	background-color: #fefefe;
+}
+
+.icon-fechar:active {
+	background-color: #fefefe;
+}
+
 .footer-content {
 	float: right;
 	margin-right: 5px;
+}
+
+.descricao-prodouto {
+	font-weight: bold;
+}
+
+.descricao-cot-disp {
+	text-align: center;
+    margin-top: 40px;
 }
 
 .produto-cad {
@@ -257,27 +300,23 @@ input[type=submit]:hover {
 }
 
 .btn-fechar {	
-    padding: 1%;
+	background-color: transparent;
     float: right;
     margin-bottom: 20px;
     border: none;
-    width: 10%;
+    cursor: pointer;
 }
 
 .cotacoes-list {
 	width: 80%;
     background-color: #fefefe;
-    margin: auto auto auto auto;
+    margin: 100px auto auto auto;
     padding: 10px 10px 10px 10px;
 }
 
 .w3-table-all {
     border: none;
 }
-
-/*
-COTA합ES
-*/
 
 .cotacao-cad {
 	width: 400px;
@@ -308,6 +347,7 @@ COTA합ES
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
 	width: 100%;
+    table-layout: fixed;
 }
 
 #cotacoes tr:nth-child(even) {
@@ -319,8 +359,20 @@ COTA합ES
 	padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    overflow-wrap: break-word;
 }
 
+.column-id {
+	width: 60px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.column-valor {
+	width: 90px;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
 #cotacoes tr:hover {
 	background-color: #ddd;
@@ -334,14 +386,10 @@ COTA합ES
 
 .top-table-cotacao {
 	width: 80%;
-	margin-top: 5%;
+	
 }
 
 .btn {
-	width: 80px;
-}
-
-.btn-novo {
 	width: 80px;
 }
 

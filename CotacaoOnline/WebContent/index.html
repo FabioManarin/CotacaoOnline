@@ -1,43 +1,43 @@
 <!doctype html>
 <html>
 <head>
-	<title>Cotação online</title>
-	<meta charset="utf-8">
-	
-	<!--JS-->
-	<script type="text/javascript" src="libs/angular/angular.min.js"></script>
-	
-	<script type="text/javascript" src="js/app.js"></script>
-	<script type="text/javascript" src="js/controller/MainController.js"></script>
-	<script type="text/javascript" src="js/services/MainService.js"></script>
-	<script type="text/javascript" src="js/controller/CotacaoController.js"></script>
-	
-	<link href="css/estilo.css" rel="stylesheet" type="text/css">
-	
-	<!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
-	
+<title>Cotação online (Produtos)</title>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="libs/angular/angular.min.js"></script>
+
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/controller/MainController.js"></script>
+<script type="text/javascript" src="js/services/MainService.js"></script>
+<script type="text/javascript" src="js/controller/CotacaoController.js"></script>
+
+<link href="css/estilo.css" rel="stylesheet" type="text/css">
+
 </head>
 <body ng-controller="MainController" ng-app="CotacaoOnline">
 
 	<div class="header">
-	  <h3 class="logo">SISTEMA DE COTAÇÕES ONLINE</h3>
+		<h3 class="logo">SISTEMA DE COTAÇÕES ONLINE</h3>
 	</div>
-	
-	
+
+
 	<div class="container">
 		<div class="search">
-			<label for="search">Pesquisar</label>
-			<input type="text" id="search" name="search" data-ng-model="search" placeholder="Buscar..." >
+			<label for="search">Pesquisar</label> <input type="text" id="search"
+				name="search" data-ng-model="search" placeholder="Buscar...">
 		</div>
-		  
-		 <label class="produto-com-cotacao">Produtos com cotacão
-		  <input type="checkbox" data-ng-model="produtosComCotacao" ng-change="onChangeFiltro()" id="produtosComCotacao" name="produtosComCotacao"
-		        checked="checked">
-		  <span class="checkmark"></span>
+
+		<label class="produto-com-cotacao">Produtos com cotacão <input
+			type="checkbox" data-ng-model="produtosComCotacao"
+			ng-change="onChangeFiltro()" id="produtosComCotacao"
+			name="produtosComCotacao" checked="checked"> <span
+			class="checkmark"></span>
 		</label>
-		
+
 		<button class="btn-novo" ng-click="onClickNovo()">Novo</button>
-		<hr class="top-table"></hr>
+		<button class="btn-atualizar" ng-click="onClickAtualizar()">Atualizar</button>
+
+		<hr id="hr" class="top-table"></hr>
 		<table id="produtos">
 			<tr>
 				<th>Código</th>
@@ -45,71 +45,78 @@
 				<th>Data inicial</th>
 				<th>Data final</th>
 				<th></th>
-				<th></th>			
+				<th></th>
 			</tr>
-			<tr ng-dblclick="onClickEditar(produto.id)" ng-repeat="produto in listaProdutos | orderBy : 'nome' | filter: search">
+			<tr ng-dblclick="onClickEditar(produto.id)"
+				ng-repeat="produto in listaProdutos | orderBy : 'nome' | filter: search">
 				<td>{{ produto.id }}</td>
 				<td>{{ produto.nome }}</td>
 				<td>{{ produto.dataInicialCotacao }}</td>
 				<td>{{ produto.dataFinalCotacao }}</td>
-				<td><a href ng-click="onClickAbrirCotacoes(produto.id)">Visualizar cotações</a></td>
+				<td><a href ng-click="onClickAbrirCotacoes(produto.id)">Visualizar
+						cotações</a></td>
 				<td class="align-center">
 					<button ng-click="onClickEditar(produto.id)" class="btn-editar">
 						<img class="icon-edit" src="img/icone-editar-cinza-16x16.png">
 					</button>
 					<button ng-click="onClickRemover(produto.id)" class="btn-remover">
-						<img class="icon-delete" src="img/icone-lixeira-mensagens-cinza-24x24.png">
+						<img class="icon-delete"
+							src="img/icone-lixeira-mensagens-cinza-24x24.png" />
 					</button>
-					
+
 				</td>
 			</tr>
 		</table>
-		
+
 		<div class="no-data-found">
 			<p class="no-data-msg">Não há dados por aqui.</p>
 		</div>
-		
+
 		<div class="modal modal-cad">
 			<div class=produto-cad>
 				<header class="header-cadastro">
 					<p class="header-title">Cadastro de produto</p>
 				</header>
-				  <form class="form-produto" data-ng-submit="salvar()">
-				    <label for="nome">Nome</label>
-				    <input type="text" id="nome" name="nome" data-ng-model="produto.nome" placeholder="Nome do produto.." required >
-				
-				    <label for="dataIncial">Data inicial</label>
-				    <input type="date" id="dataIncial" data-ng-model="produto.dataInicialCotacao" name="dataIncial" required>
-				    
-				    <label for="dataFinal">Data final</label>
-				    <input type="date" id="dataFinal" data-ng-model="produto.dataFinalCotacao" name="dataFinal" required>
-				    
-				    <footer class="footer-cadastro">
-					    <input type="button" class="btn footer-content" value="Fechar" ng-click="onClickFechar()">
-					    <input type="submit" class="btn footer-content" value="Salvar">
-					 </footer>
-				  </form>
+				<form class="form-produto" data-ng-submit="salvar()">
+					<label for="nome">Nome</label> <input type="text" id="nome"
+						name="nome" data-ng-model="produto.nome"
+						placeholder="Nome do produto.." required> <label
+						for="dataIncial">Data inicial</label> <input type="date"
+						id="dataIncial" data-ng-model="produto.dataInicialCotacao"
+						name="dataIncial" required> <label for="dataFinal">Data
+						final</label> <input type="date" id="dataFinal"
+						data-ng-model="produto.dataFinalCotacao" name="dataFinal" required>
+
+					<footer class="footer-cadastro">
+						<input type="button" class="btn footer-content" value="Fechar"
+							ng-click="onClickFechar()"> <input type="submit"
+							class="btn footer-content" value="Salvar">
+					</footer>
+				</form>
 			</div>
 		</div>
-		
+
 		<div class="modal modal-cotacoes">
 			<div class=cotacoes-list>
 				<table id="cotacoes">
-					<tr ">
-						<th>Código</th>
-						<th>Valor</th>
+					<tr>
+						<th class="column-id">Código</th>
+						<th class="column-valor">Valor</th>
 						<th>Nome fornecedor</th>
 						<th>E-mail fornecedor</th>
 						<th>Telefone</th>
 					</tr>
 					<tr ng-repeat="cotacoes in listaCotacoes | orderBy : 'valor'">
-						<td>{{ cotacoes.id }}</td>
+						<td class="column-id">{{ cotacoes.id }}</td>
 						<td>{{ cotacoes.valor | currency:"R$ "}}</td>
 						<td>{{ cotacoes.nomeFornec }}</td>
 						<td>{{ cotacoes.emailFornec }}</td>
 						<td>{{ cotacoes.telefoneFornec }}</td>
 					</tr>
-						<button class="btn-fechar w3-button w3-red" ng-click="onClickFecharCotacoes()">Fechar</button>
+					<button class="btn-fechar" ng-click="onClickFecharCotacoes()">
+						<img class="icon-fechar" src="img/icone-remover-cinza-16x16.png" />
+					</button>
+					<span>Produto - {{produtoAtual.nome}} ({{produtoAtual.id}})</span>
 				</table>
 			</div>
 		</div>
