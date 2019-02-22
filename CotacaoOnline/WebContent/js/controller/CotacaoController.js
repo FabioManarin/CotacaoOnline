@@ -27,9 +27,9 @@ angular.module('CotacaoController', []).controller('CotacaoController', function
     	}
 		
     	service.inserirCotacao($scope.cotacao, function(resp){
-    		alert(resp.data.message);
     		limparCotacao();
     		fecharCadastroCotacao();
+    		alert(resp.data.message);
     	});
     }
 	
@@ -46,6 +46,7 @@ angular.module('CotacaoController', []).controller('CotacaoController', function
 	
 	$scope.onClickAtualizar = function(cb) {
 		$scope.listarProdutoDisponivelCotacao(cb);
+		alert("Registros atualizados com sucesso.")
 	}
 	
 	$scope.onClickNovaCotacao = function(produtoDisponivel) {

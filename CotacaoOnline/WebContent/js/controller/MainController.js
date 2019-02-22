@@ -39,8 +39,9 @@ angular.module('MainController', []).controller('MainController', function ($sco
     	} else {
     		service.inserirProduto($scope.produto, function(resp){
     			limparProduto();
-				$scope.listarProduto(() => alert(resp.data.message));
+				$scope.listarProduto();
 				fecharCadastro();
+				alert(resp.data.message);
     		}); 
     	}
     }
@@ -88,6 +89,7 @@ angular.module('MainController', []).controller('MainController', function ($sco
     
     $scope.onClickAtualizar = function(cb) {
     	$scope.listarProduto(cb);
+    	alert("Registros atualizados com sucesso.")
     }
     
     $scope.onChangeFiltro = function () {

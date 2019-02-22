@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>Cotação online (Fornecedores)</title>
+<title>Cotação online</title>
 <meta charset="utf-8">
 
 <script type="text/javascript" src="libs/angular/angular.min.js"></script>
@@ -22,7 +22,6 @@
 
 	<h3 class="descricao-cot-disp">Lista de produtos com período
 		disponível para cotação</h3>
-	<hr id="top-table-cotacao" class="top-table-cotacao"></hr>
 
 	<div class="search-cot">
 		<label class="search-cot-name" for="search-cot">Pesquisar</label> <input
@@ -32,9 +31,11 @@
 
 	<button class="btn-atualizar-cot" data-ng-click="onClickAtualizar()">Atualizar</button>
 
+	<hr id="top-table-cotacao" class="top-table-cotacao"></hr>
+
 	<div class="container">
 		<table id="produtos" class="w3-table-all w3-hoverable">
-			<tr class="w3-gray">
+			<tr>
 				<th>Código</th>
 				<th>Nome</th>
 				<th>Data inicial</th>

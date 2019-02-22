@@ -8,7 +8,7 @@ angular.module('MainService', []).factory('service', ['$http', function($http){
                     .catch(cbError)
         },
         listarProdutoId: function(id, cbSuccess, cbError) {
-            return $http.get(api + id)
+        	return $http.get(api + 'produto/' + id)
                     .then(cbSuccess)
         },
         inserirProduto: function(produto, cbSuccess, cbError) {

@@ -61,6 +61,26 @@ public class ProdutoService {
 	}
 	
 	@GET
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listarProdutoPorId(@PathParam("id") int idProduto) {
+		Produto produto = null;
+		Gson jsonParse = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
+		
+		try {
+			produto = produtoDao.PesquisarPorId(idProduto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(produto == null){
+			return retMessage.returnMessage(false, "Produto não encontrado.");
+		}
+
+		return Response.status(Status.OK).entity(jsonParse.toJson(produto)).build();
+	}
+	
+	@GET
 	@Path("/listarProdutosDisponiveis")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listarProdutosDisponiveis() throws Exception {

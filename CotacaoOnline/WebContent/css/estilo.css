@@ -117,7 +117,6 @@ body {
 	color: white;
 }
 
-<!--Formulario de produtos-->
 .formProduto {
 	border-radius: 5px;
   	background-color: #f2f2f2;
@@ -214,27 +213,11 @@ input[type=submit]:hover {
 	padding: 4px;
 }
 
-.icon-edit:hover {
+.icon-delete:active, .icon-edit:active, .icon-fechar:active {
 	background-color: #fefefe;
 }
 
-.icon-edit:active {
-	background-color: #fefefe;
-}
-
-.icon-delete:hover {
-	background-color: #fefefe;
-}
-
-.icon-delete:active {
-	background-color: #fefefe;
-}
-
-.icon-fechar:hover {
-	background-color: #fefefe;
-}
-
-.icon-fechar:active {
+.icon-fechar:hover, .icon-delete:hover, .icon-edit:hover {
 	background-color: #fefefe;
 }
 
@@ -363,13 +346,13 @@ input[type=submit]:hover {
 }
 
 .column-id {
-	width: 60px;
+	width: 10%;
     overflow: hidden;
     white-space: nowrap;
 }
 
 .column-valor {
-	width: 90px;
+	width: 20%;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -386,7 +369,7 @@ input[type=submit]:hover {
 
 .top-table-cotacao {
 	width: 80%;
-	
+	margin-top: 80px;
 }
 
 .btn {
@@ -405,9 +388,6 @@ input[type=submit]:hover {
 	width: 100%;
 }
 
-/*
-CheckBox
-*/
 .produto-com-cotacao {
   position: relative;
   padding-left: 30px;

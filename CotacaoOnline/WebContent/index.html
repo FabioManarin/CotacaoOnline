@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>Cotação online (Produtos)</title>
+<title>Cotação online</title>
 <meta charset="utf-8">
 
 <script type="text/javascript" src="libs/angular/angular.min.js"></script>
@@ -56,7 +56,7 @@
 				<td><a href ng-click="onClickAbrirCotacoes(produto.id)">Visualizar
 						cotações</a></td>
 				<td class="align-center">
-					<button ng-click="onClickEditar(produto.id)" class="btn-editar">
+					<button ng-click="onClickEditar(produto.id)"  class="btn-editar">
 						<img class="icon-edit" src="img/icone-editar-cinza-16x16.png">
 					</button>
 					<button ng-click="onClickRemover(produto.id)" class="btn-remover">
@@ -108,7 +108,7 @@
 					</tr>
 					<tr ng-repeat="cotacoes in listaCotacoes | orderBy : 'valor'">
 						<td class="column-id">{{ cotacoes.id }}</td>
-						<td>{{ cotacoes.valor | currency:"R$ "}}</td>
+						<td class="column-valor">{{ cotacoes.valor | currency:"R$ "}}</td>
 						<td>{{ cotacoes.nomeFornec }}</td>
 						<td>{{ cotacoes.emailFornec }}</td>
 						<td>{{ cotacoes.telefoneFornec }}</td>
